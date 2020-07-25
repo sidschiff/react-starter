@@ -31,7 +31,8 @@ class App extends React.Component {
     }
   }
 
-  searchList(target, key) {
+  ///////////////////////////////////////////////////////////////////
+  updateList(target, key) {
     // console.log('Looking for a match')
     let changingList = this.state.adaptableList
     let currentMovieList = this.state.userInputList
@@ -56,7 +57,9 @@ class App extends React.Component {
       adaptableList: changingList
     })
   }
+  ///////////////////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////////////////////////
   addToList() {
     let currentUserInputList = this.state.userInputList
     currentUserInputList.push({title: this.state.currentUserInput})
@@ -64,15 +67,21 @@ class App extends React.Component {
     this.setState({
       userInputList: currentUserInputList
     })
-    console.log('Current userInputList', this.state.userInputList)
+    // Refresh the list
+    this.updateList('', 'title')
+    // console.log('Current userInputList', this.state.userInputList)
   }
+  ///////////////////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////////////////////////
   updateMovieUserInput(input) {
     this.setState({
       currentUserInput: input
     })
   }
+  ///////////////////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////////////////////////
   componentDidMount() {
     let changingList = this.state.adaptableList
     let currentMovieList = this.state.userInputList
@@ -83,7 +92,9 @@ class App extends React.Component {
       adaptableList: changingList
     })
   }
+  ///////////////////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////////////////////////
   render() {
     // console.log('adaptable list length', this.state.adaptableList.length)
 
@@ -93,7 +104,7 @@ class App extends React.Component {
           <AddMovieBar updateInput={this.updateMovieUserInput.bind(this)} addAMovie={this.addToList.bind(this)} />
         </div>
         <div className='search-bar'>
-          <SearchBar handleSearchInputChange={this.searchList.bind(this)} />
+          <SearchBar handleSearchInputChange={this.updateList.bind(this)} />
         </div>
         <div>
           {this.state.adaptableList.length > 0
@@ -104,6 +115,7 @@ class App extends React.Component {
       </div>
     );
   }
+  ///////////////////////////////////////////////////////////////////
 }
 
 
