@@ -82,6 +82,21 @@ class App extends React.Component {
   ///////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////////
+  enterPressed(event) {
+    console.log('Triggered enterPressed')
+    let code = event.keyCode || event.which
+    console.log('current code is', code)
+    if (code === 'Enter' || code === 13) {
+      this.addToList()
+
+      this.setState({
+        currentUserInput: ''
+      })
+    }
+  }
+  ///////////////////////////////////////////////////////////////////
+
+  ///////////////////////////////////////////////////////////////////
   componentDidMount() {
     let changingList = this.state.adaptableList
     let currentMovieList = this.state.userInputList
@@ -101,7 +116,7 @@ class App extends React.Component {
     return (
       <div>
         <div className='add-movie-bar'>
-          <AddMovieBar updateInput={this.updateMovieUserInput.bind(this)} addAMovie={this.addToList.bind(this)} />
+          <AddMovieBar updateInput={this.updateMovieUserInput.bind(this)} addAMovie={this.addToList.bind(this)} detectEnter={this.enterPressed.bind(this)} currentInputValue={this.state.currentUserInput}/>
         </div>
         <div className='search-bar'>
           <SearchBar handleSearchInputChange={this.updateList.bind(this)} />
@@ -117,6 +132,5 @@ class App extends React.Component {
   }
   ///////////////////////////////////////////////////////////////////
 }
-
 
 export default App;
