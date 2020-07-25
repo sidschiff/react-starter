@@ -3,7 +3,7 @@ import React from 'react';
 // import MovieList from './MovieList.jsx';
 
 var MovieListEntry = ({title}) => (
-  <div className='movie-list-entry'>
+  <div className='movie-list-entry bubble'>
     {title}
   </div>
 )

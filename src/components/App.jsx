@@ -18,7 +18,8 @@ class App extends React.Component {
       ],
       adaptableList: [],
       userInputList: [],
-      currentUserInput: ''
+      currentUserInput: '',
+      hasBeenWatched: false
     }
   }
   ///////////////////////////////////////////////////////////////////
@@ -83,6 +84,14 @@ class App extends React.Component {
     if (code === 'Enter' || code === 13) {
       this.addToList()
     }
+  }
+  ///////////////////////////////////////////////////////////////////
+
+  ///////////////////////////////////////////////////////////////////
+  toggleWatched() {
+    this.setState({
+      hasBeenWatched: !hasBeenWatched
+    })
   }
   ///////////////////////////////////////////////////////////////////
 

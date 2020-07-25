@@ -4,7 +4,7 @@ import MovieListEntry from './MovieListEntry.jsx';
 
 
 var MovieList = ({moviesArray}) => (
-  <div className='movie-list'>
+  <div className='movie-list container'>
 
     {moviesArray.map((movie) =>
       <MovieListEntry
