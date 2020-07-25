@@ -1,6 +1,7 @@
 import React from 'react';
 import MovieList from './MovieList.jsx';
 import SearchBar from './SearchBar.jsx';
+import AddMovieBar from './AddMovieBar.jsx';
 // import MovieListEntry from './MovieListEntry.jsx';
 
 // var hardcodedList = [
@@ -18,29 +19,34 @@ class App extends React.Component {
 
     this.state = {
       hardcodedMovies: [
-        {title: 'Mean Girls'},
-        {title: 'Hackers'},
-        {title: 'The Grey'},
-        {title: 'Sunshine'},
-        {title: 'Ex Machina'},
+        { title: 'Mean Girls' },
+        { title: 'Hackers' },
+        { title: 'The Grey' },
+        { title: 'Sunshine' },
+        { title: 'Ex Machina' },
       ],
       adaptableList: [],
-      userInputList: []
+      userInputList: [],
+      currentUserInput: ''
     }
   }
 
   searchList(target, key) {
     // console.log('Looking for a match')
     let changingList = this.state.adaptableList
-    let hardcodedList = this.state.hardcodedMovies
-    for (let i = 0; i < hardcodedList.length; i++) {
-      if (hardcodedList[i][key].includes(target)) {
-        if (!changingList.includes(hardcodedList[i][key])) {
-          changingList.push(hardcodedList[i][key])
+    let currentMovieList = this.state.userInputList
+    for (let i = 0; i < currentMovieList.length; i++) {
+      if (currentMovieList[i][key].includes(target)) {
+        if (!changingList.includes(currentMovieList[i])) {
+          // console.log('Here is what is getting pushed to changingList', currentMovieList[i])
+          changingList.push(currentMovieList[i])
         }
       }
       for (let j = 0; j < changingList.length; j++) {
-        if (changingList[j].indexOf(target) === -1) {
+        // console.log('Current movie object: ', changingList[j])
+        // console.log('Current movie title: ', changingList[j][key])
+        if (changingList[j][key].indexOf(target) === -1) {
+          // console.log('Here is what we are removing', changingList[j])
           changingList.splice(j, 1)
         }
       }
@@ -51,11 +57,27 @@ class App extends React.Component {
     })
   }
 
+  addToList() {
+    let currentUserInputList = this.state.userInputList
+    currentUserInputList.push({title: this.state.currentUserInput})
+
+    this.setState({
+      userInputList: currentUserInputList
+    })
+    console.log('Current userInputList', this.state.userInputList)
+  }
+
+  updateMovieUserInput(input) {
+    this.setState({
+      currentUserInput: input
+    })
+  }
+
   componentDidMount() {
     let changingList = this.state.adaptableList
-    let hardcodedList = this.state.hardcodedMovies
-    for (let i = 0; i < hardcodedList.length; i++) {
-      changingList.push(hardcodedList[i]['title'])
+    let currentMovieList = this.state.userInputList
+    for (let i = 0; i < currentMovieList.length; i++) {
+      changingList.push(currentMovieList[i])
     }
     this.setState({
       adaptableList: changingList
@@ -66,17 +88,20 @@ class App extends React.Component {
     // console.log('adaptable list length', this.state.adaptableList.length)
 
     return (
-    <div>
-      <div className='search-bar'>
-        <SearchBar handleSearchInputChange={this.searchList.bind(this)}/>
-      </div>
       <div>
-        {this.state.adaptableList.length > 0
-        ? <MovieList moviesArray={this.state.adaptableList} />
-        : <span className='movie-list-entry'>No Results. Refine Search.</span>
-        }
+        <div className='add-movie-bar'>
+          <AddMovieBar updateInput={this.updateMovieUserInput.bind(this)} addAMovie={this.addToList.bind(this)} />
+        </div>
+        <div className='search-bar'>
+          <SearchBar handleSearchInputChange={this.searchList.bind(this)} />
+        </div>
+        <div>
+          {this.state.adaptableList.length > 0
+            ? <MovieList moviesArray={this.state.adaptableList} />
+            : <span className='movie-list-entry'>No Results. Refine Search.</span>
+          }
+        </div>
       </div>
-    </div>
     );
   }
 }
