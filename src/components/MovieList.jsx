@@ -8,7 +8,7 @@ var MovieList = ({moviesArray}) => (
 
     {moviesArray.map((movie) =>
       <MovieListEntry
-        title={movie.title}
+        title={movie}
       />
 
     )}

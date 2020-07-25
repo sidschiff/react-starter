@@ -1,0 +1,48 @@
+
+
+body {
+  height: 100%;
+}
+
+h1 {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: -1px 1px 1px rgba(28,110,164,0.16);
+  border-radius: 10px;
+}
+
+.search-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.form-inline {
+  padding: 10px;
+}
+
+.form-insert {
+
+}
+
+.movie-list {
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+.movie-list-entry {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 5px;
+}

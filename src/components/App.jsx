@@ -3,13 +3,13 @@ import MovieList from './MovieList.jsx';
 import SearchBar from './SearchBar.jsx';
 // import MovieListEntry from './MovieListEntry.jsx';
 
-var hardcodedList = [
-  {title: 'Mean Girls'},
-  {title: 'Hackers'},
-  {title: 'The Grey'},
-  {title: 'Sunshine'},
-  {title: 'Ex Machina'},
-];
+// var hardcodedList = [
+//   {title: 'Mean Girls'},
+//   {title: 'Hackers'},
+//   {title: 'The Grey'},
+//   {title: 'Sunshine'},
+//   {title: 'Ex Machina'},
+// ];
 
 
 class App extends React.Component {
@@ -24,16 +24,13 @@ class App extends React.Component {
         {title: 'Sunshine'},
         {title: 'Ex Machina'},
       ],
-      adaptableList: []
+      adaptableList: [],
+      userInputList: []
     }
   }
 
-  handleSearchInputChange(target, list, key) {
-
-  }
-
   searchList(target, key) {
-    console.log('Looking for a match')
+    // console.log('Looking for a match')
     let changingList = this.state.adaptableList
     let hardcodedList = this.state.hardcodedMovies
     for (let i = 0; i < hardcodedList.length; i++) {
@@ -48,19 +45,25 @@ class App extends React.Component {
         }
       }
     }
-    console.log('Here is what has been found: ', this.state.adaptableList)
+    // console.log('Here is what has been found: ', this.state.adaptableList)
     this.setState({
       adaptableList: changingList
     })
   }
 
+  componentDidMount() {
+    let changingList = this.state.adaptableList
+    let hardcodedList = this.state.hardcodedMovies
+    for (let i = 0; i < hardcodedList.length; i++) {
+      changingList.push(hardcodedList[i]['title'])
+    }
+    this.setState({
+      adaptableList: changingList
+    })
+  }
 
   render() {
-    console.log('adaptable list length', this.state.adaptableList.length)
-    let movieRenderList;
-    if (this.state.adaptableList.length > 0) {
-      movieRenderList = <MovieList moviesArray={this.state.adaptableList}/>
-    }
+    // console.log('adaptable list length', this.state.adaptableList.length)
 
     return (
     <div>
@@ -68,11 +71,15 @@ class App extends React.Component {
         <SearchBar handleSearchInputChange={this.searchList.bind(this)}/>
       </div>
       <div>
-        {movieRenderList}
+        {this.state.adaptableList.length > 0
+        ? <MovieList moviesArray={this.state.adaptableList} />
+        : <span className='movie-list-entry'>No Results. Refine Search.</span>
+        }
       </div>
     </div>
     );
   }
 }
+
 
 export default App;

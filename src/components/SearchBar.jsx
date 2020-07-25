@@ -8,7 +8,6 @@ var SearchBar = ({handleSearchInputChange}) => (
     placeholder='Search Movies'
     onChange={(event) => handleSearchInputChange(event.target.value, 'title')}
     />
-    <button className='search-button'>Go</button>
   </div>
 );
 
