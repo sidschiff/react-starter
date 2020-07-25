@@ -3,16 +3,17 @@ import React from 'react';
 import MovieListEntry from './MovieListEntry.jsx';
 
 
-var MovieList = ({moviesArray}) => (
+var MovieList = ({moviesArray, toggleWatched}) => (
   <div className='movie-list container'>
 
     {moviesArray.map((movie) =>
       <MovieListEntry
         title={movie.title}
+        watched={movie.watched}
+        toggleWatched={toggleWatched}
+        currentMovie={movie}
       />
-
     )}
-
   </div>
 );
 

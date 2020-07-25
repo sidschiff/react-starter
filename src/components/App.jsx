@@ -19,34 +19,29 @@ class App extends React.Component {
       adaptableList: [],
       userInputList: [],
       currentUserInput: '',
-      hasBeenWatched: false
     }
   }
   ///////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////////
   updateList(target, key) {
-    // console.log('Looking for a match')
     let changingList = this.state.adaptableList
     let currentMovieList = this.state.userInputList
     for (let i = 0; i < currentMovieList.length; i++) {
+      // Adds matching movies
       if (currentMovieList[i][key].includes(target)) {
         if (!changingList.includes(currentMovieList[i])) {
-          // console.log('Here is what is getting pushed to changingList', currentMovieList[i])
           changingList.push(currentMovieList[i])
         }
       }
+      // Removes non-matching movies
       for (let j = 0; j < changingList.length; j++) {
-        // console.log('Current movie object: ', changingList[j])
-        // console.log('Current movie title: ', changingList[j][key])
         if (changingList[j][key].indexOf(target) === -1) {
-          // console.log('Here is what we are removing', changingList[j])
           changingList.splice(j, 1)
         }
       }
     }
-    changingList.sort()
-    // console.log('Here is what has been found: ', this.state.adaptableList)
+    console.log('Current list: ', changingList)
     this.setState({
       adaptableList: changingList
     })
@@ -56,15 +51,13 @@ class App extends React.Component {
   ///////////////////////////////////////////////////////////////////
   addToList() {
     let currentUserInputList = this.state.userInputList
-    currentUserInputList.push({title: this.state.currentUserInput})
-
+    currentUserInputList.push({title: this.state.currentUserInput, watched: false})
     this.setState({
       userInputList: currentUserInputList,
       currentUserInput: ''
     })
     // Refresh the list
     this.updateList('', 'title')
-    // console.log('Current userInputList', this.state.userInputList)
   }
   ///////////////////////////////////////////////////////////////////
 
@@ -78,9 +71,7 @@ class App extends React.Component {
 
   ///////////////////////////////////////////////////////////////////
   enterPressed(event) {
-    // console.log('Triggered enterPressed')
     let code = event.keyCode || event.which
-    // console.log('current code is', code)
     if (code === 'Enter' || code === 13) {
       this.addToList()
     }
@@ -88,15 +79,15 @@ class App extends React.Component {
   ///////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////////
-  toggleWatched() {
-    this.setState({
-      hasBeenWatched: !hasBeenWatched
-    })
+  toggleWatched(movie) {
+    movie.watched ? movie.watched = false : movie.watched = true
+    console.log('Movie after toggling', movie)
   }
   ///////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////////
   componentDidMount() {
+    // if something exists in the array at page load, display it
     let changingList = this.state.adaptableList
     let currentMovieList = this.state.userInputList
     for (let i = 0; i < currentMovieList.length; i++) {
@@ -110,7 +101,6 @@ class App extends React.Component {
 
   ///////////////////////////////////////////////////////////////////
   render() {
-    // console.log('adaptable list length', this.state.adaptableList.length)
     return (
       <div>
         <div className='add-movie-bar'>
@@ -121,7 +111,7 @@ class App extends React.Component {
         </div>
         <div>
           {this.state.adaptableList.length > 0
-            ? <MovieList moviesArray={this.state.adaptableList} />
+            ? <MovieList moviesArray={this.state.adaptableList} toggleWatched={this.toggleWatched.bind(this)} />
             : <span className='movie-list-entry'>No Results. Refine Search.</span>
           }
         </div>
