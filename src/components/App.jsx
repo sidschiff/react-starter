@@ -2,17 +2,8 @@ import React from 'react';
 import MovieList from './MovieList.jsx';
 import SearchBar from './SearchBar.jsx';
 import AddMovieBar from './AddMovieBar.jsx';
-// import MovieListEntry from './MovieListEntry.jsx';
 
-// var hardcodedList = [
-//   {title: 'Mean Girls'},
-//   {title: 'Hackers'},
-//   {title: 'The Grey'},
-//   {title: 'Sunshine'},
-//   {title: 'Ex Machina'},
-// ];
-
-
+/////////////////////////////////////////////////////////////////////
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +21,7 @@ class App extends React.Component {
       currentUserInput: ''
     }
   }
+  ///////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////////
   updateList(target, key) {
@@ -52,6 +44,7 @@ class App extends React.Component {
         }
       }
     }
+    changingList.sort()
     // console.log('Here is what has been found: ', this.state.adaptableList)
     this.setState({
       adaptableList: changingList
@@ -65,7 +58,8 @@ class App extends React.Component {
     currentUserInputList.push({title: this.state.currentUserInput})
 
     this.setState({
-      userInputList: currentUserInputList
+      userInputList: currentUserInputList,
+      currentUserInput: ''
     })
     // Refresh the list
     this.updateList('', 'title')
@@ -83,15 +77,11 @@ class App extends React.Component {
 
   ///////////////////////////////////////////////////////////////////
   enterPressed(event) {
-    console.log('Triggered enterPressed')
+    // console.log('Triggered enterPressed')
     let code = event.keyCode || event.which
-    console.log('current code is', code)
+    // console.log('current code is', code)
     if (code === 'Enter' || code === 13) {
       this.addToList()
-
-      this.setState({
-        currentUserInput: ''
-      })
     }
   }
   ///////////////////////////////////////////////////////////////////
@@ -112,7 +102,6 @@ class App extends React.Component {
   ///////////////////////////////////////////////////////////////////
   render() {
     // console.log('adaptable list length', this.state.adaptableList.length)
-
     return (
       <div>
         <div className='add-movie-bar'>
